@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "doc-extraction-lite.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{- include "doc-extraction-lite.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels: {{- include "doc-extraction-lite.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels: {{- include "doc-extraction-lite.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: backend
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+          env:
+            - name: DKUBEX_BASE_PATH
+              value: "/{{ include "doc-extraction-lite.name" . }}"
+            {{- if .Values.postgres }}
+            - name: DATABASE_URL
+              value: {{ .Values.postgres.db_url | quote }}
+            {{- end }}
+            - name: MODEL_BASE_URL
+              value: {{ .Values.model.base_url | quote }}
+            - name: MODEL_API_KEY
+              value: {{ .Values.model.api_key | quote }}
+            - name: MODEL_NAME
+              value: {{ .Values.model.name | quote }}
+            - name: MODEL_TIMEOUT
+              value: {{ .Values.model.timeout | quote }}
+            - name: MAX_PDF_SIZE_MB
+              value: {{ .Values.max_pdf_size_mb | quote }}
+          resources: {{- toYaml .Values.resources | nindent 12 }}
+        - name: frontend
+          image: "nginx:stable-alpine"
+          ports:
+            - name: http-frontend
+              containerPort: 80
+          volumeMounts:
+            - name: frontend-static
+              mountPath: /usr/share/nginx/html
+      volumes:
+        - name: frontend-static
+          emptyDir: {}
+      initContainers:
+        - name: copy-frontend
+          image: "busybox"
+          command: ["sh", "-c", "cp -R /app/frontend/* /frontend-static/"]
+          volumeMounts:
+            - name: frontend-static
+              mountPath: /frontend-static
+            - name: app-source
+              mountPath: /app
+      # Assuming the backend image also contains the frontend source in /app/frontend
+      # If not, you'll need a separate image for the frontend or a different initContainer strategy.
+      # For now, we'll assume the backend image has the frontend files.
+      # This will require building the backend image with the frontend files included.
+      # This is a simplification for the Helm chart. In a real scenario, the frontend
+      # would likely be built and served separately, or included in a dedicated frontend image.

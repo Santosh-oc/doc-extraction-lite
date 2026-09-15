@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doc Extraction Lite</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Doc Extraction Lite</h1>
+
+        <section id="upload-section">
+            <h2>Upload PDF</h2>
+            <input type="file" id="pdf-upload" accept=".pdf">
+            <button id="upload-button">Upload</button>
+            <p id="upload-status"></p>
+            <div id="uploaded-doc-info" style="display: none;">
+                <p>Document: <span id="doc-filename"></span> (<span id="doc-page-count"></span> pages)</p>
+                <button id="select-another-pdf">Upload Another PDF</button>
+            </div>
+        </section>
+
+        <section id="extraction-section" style="display: none;">
+            <h2>Define Fields & Extract</h2>
+            <div id="field-definitions">
+                <h3>Fields</h3>
+                <div class="field-row header">
+                    <span>Name</span>
+                    <span>Description</span>
+                    <span>Type</span>
+                    <span>Required</span>
+                    <span>Actions</span>
+                </div>
+            </div>
+            <button id="add-field-button">Add Field</button>
+
+            <h3>Instructions (Optional)</h3>
+            <textarea id="extraction-instructions" rows="4" placeholder="e.g., 'Extract only the invoice number and total amount.'"></textarea>
+
+            <button id="run-extraction-button">Run Extraction</button>
+            <p id="extraction-status"></p>
+        </section>
+
+        <section id="results-section" style="display: none;">
+            <h2>Extraction Results</h2>
+            <div id="results-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field Name</th>
+                            <th>Value</th>
+                            <th>Confidence</th>
+                            <th>Page</th>
+                            <th>Evidence</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-table-body">
+                    </tbody>
+                </table>
+            </div>
+            <div class="download-buttons">
+                <button id="download-json">Download JSON</button>
+                <button id="download-csv">Download CSV</button>
+            </div>
+            <button id="new-extraction-button">New Extraction</button>
+        </section>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

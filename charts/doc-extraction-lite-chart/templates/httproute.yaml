@@ -1,0 +1,45 @@
+{{/*
+  Base-path routing — every app with a UI keeps this file. Delete it only for a headless
+  app (routing.type: none), which has no route at all.
+*/}}
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ include "doc-extraction-lite.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{- include "doc-extraction-lite.labels" . | nindent 4 }}
+spec:
+  parentRefs:
+    - name: traefik-gateway
+      namespace: dkubex
+  {{- if and .Values.hostname (ne .Values.hostname "*") }}
+  hostnames:
+    - {{ .Values.hostname | quote }}
+  {{- end }}
+  rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /{{ include "doc-extraction-lite.name" . }}/api
+      filters:
+        - type: ExtensionRef
+          extensionRef:
+            group: traefik.io
+            kind: Middleware
+            name: cookie-auth
+      backendRefs:
+        - name: {{ include "doc-extraction-lite.fullname" . }}
+          port: {{ .Values.service.port }}
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /{{ include "doc-extraction-lite.name" . }}
+      filters:
+        - type: ExtensionRef
+          extensionRef:
+            group: traefik.io
+            kind: Middleware
+            name: cookie-auth
+      backendRefs:
+        - name: {{ include "doc-extraction-lite.fullname" . }}
+          port: 80

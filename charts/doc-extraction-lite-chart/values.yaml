@@ -1,0 +1,48 @@
+replicaCount: 1
+
+image:
+  repository: doc-extraction-lite-backend
+  tag: "latest"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8000
+
+# Hostname for the HTTPRoute. "*" or empty means match any host.
+hostname: "*"
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 256Mi
+  limits:
+    cpu: 500m
+    memory: 1024Mi
+
+# Injected by DKubeX when declared in `dependencies`. Delete the blocks you do not use.
+postgres:
+  db_url: ""
+# minio:
+#   endpoint: ""
+#   access_key: ""
+#   secret_key: ""
+#   bucket: ""
+# redis:
+#   url: ""
+#   key_prefix: ""
+
+max_pdf_size_mb: 25
+
+model:
+  base_url: "http://mock-llm-service:8000/v1"
+  api_key: "dummy_api_key"
+  name: "dummy_model_name"
+  timeout: 120
+
+# Persistent storage. Use storageClass for an app-owned PVC, or userPvcName to mount the
+# user's existing volume — never both.
+storage:
+  storageClass: ""
+  size: 5Gi
+  mountPath: /data

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "doc-extraction-lite.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{- include "doc-extraction-lite.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  selector: {{- include "doc-extraction-lite.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: http-backend
+      port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+    - name: http-frontend
+      port: 80
+      targetPort: http-frontend
+      protocol: TCP
