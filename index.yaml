@@ -29,12 +29,12 @@ entries:
           - "https://raw.githubusercontent.com/dkubeio/dkubex-apps/main/screenshots/doc-extraction-lite-1.png"
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-09-16T09:03:29.729175524Z"
+    created: "2026-09-16T09:10:39.208752674Z"
     description: Document Extraction Lite application
-    digest: 87078dc380ff64aaf8022b4dd1ec95f263c0e4e1f2e8e07621589462e347ca43
+    digest: 59858353a7810909ed74b69d97291da40ceb88e18ee4a5483f4b002f88ead76c
     name: doc-extraction-lite
     type: application
     urls:
     - https://Santosh-oc.github.io/doc-extraction-lite/doc-extraction-lite-0.1.0.tgz
     version: 0.1.0
-generated: "2026-09-16T09:03:29.728263575Z"
+generated: "2026-09-16T09:10:39.207791306Z"
