@@ -50,16 +50,8 @@ spec:
           emptyDir: {}
       initContainers:
         - name: copy-frontend
-          image: "busybox"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           command: ["sh", "-c", "cp -R /app/frontend/* /frontend-static/"]
           volumeMounts:
             - name: frontend-static
               mountPath: /frontend-static
-            - name: app-source
-              mountPath: /app
-      # Assuming the backend image also contains the frontend source in /app/frontend
-      # If not, you'll need a separate image for the frontend or a different initContainer strategy.
-      # For now, we'll assume the backend image has the frontend files.
-      # This will require building the backend image with the frontend files included.
-      # This is a simplification for the Helm chart. In a real scenario, the frontend
-      # would likely be built and served separately, or included in a dedicated frontend image.
