@@ -1,0 +1,40 @@
+apiVersion: v1
+entries:
+  doc-extraction-lite:
+  - annotations:
+      dkubex: |
+        url: "/doc-extraction-lite"
+        displayName: Doc Extraction Lite
+        docs: "https://dkubeio.github.io/docs-site/components/doc-extraction-lite/"
+        images: []
+        description: "A simple document extraction application with PDF text extraction and LLM-based field extraction."
+        categories:
+          - "AI / ML"
+          - "Other"
+        roles:
+          - "user"
+          - "admin"
+        resources:
+          cpu:
+            min: "100m"
+            recommended: "500m"
+          memory:
+            min: "256Mi"
+            recommended: "1024Mi"
+        dependencies: []
+        routing:
+          type: basepath
+        docs: "https://dkubeio.github.io/docs-site/components/doc-extraction-lite/"
+        images:
+          - "https://raw.githubusercontent.com/dkubeio/dkubex-apps/main/screenshots/doc-extraction-lite-1.png"
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2026-09-16T06:40:31.73148367Z"
+    description: Document Extraction Lite application
+    digest: 31270fc78bd6aaa67bd1ab5c2beb17ffc1c0cca03a5722fe0b9b3f5f2a7e6472
+    name: doc-extraction-lite
+    type: application
+    urls:
+    - https://Santosh-oc.github.io/doc-extraction-lite/doc-extraction-lite-0.1.0.tgz
+    version: 0.1.0
+generated: "2026-09-16T06:40:31.730203361Z"
