@@ -9,8 +9,8 @@ annotations:
   dkubex: |
     url: "/doc-extraction-lite"
     displayName: Doc Extraction Lite
+    icon: "https://Santosh-oc.github.io/doc-extraction-lite/doc-extraction-lite.svg"
     docs: "https://dkubeio.github.io/docs-site/components/doc-extraction-lite/"
-    images: []
     description: "A simple document extraction application with PDF text extraction and LLM-based field extraction."
     categories:
       - "AI / ML"
@@ -25,9 +25,9 @@ annotations:
       memory:
         min: "256Mi"
         recommended: "1024Mi"
-    dependencies: []
+    dependencies:
+      - postgres
     routing:
       type: basepath
-    docs: "https://dkubeio.github.io/docs-site/components/doc-extraction-lite/"
     images:
       - "https://raw.githubusercontent.com/dkubeio/dkubex-apps/main/screenshots/doc-extraction-lite-1.png"
